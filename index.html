@@ -386,6 +386,232 @@
       border-radius: 20px;
     }
 
+    /* Global Omnibar Web Search with Search Engine Selector */
+    .topbar-search-container {
+      flex: 1;
+      max-width: 620px;
+      min-width: 280px;
+      margin: 0 24px;
+      position: relative;
+    }
+
+    .omnibar-search-box {
+      width: 100%;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      background: rgba(18, 26, 36, 0.65);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 4px 6px 4px 6px;
+      box-shadow: 
+        inset 1px 1px 1.5px rgba(255, 255, 255, 0.25),
+        inset -1px -1px 1.5px rgba(0, 0, 0, 0.35),
+        0 8px 24px rgba(0, 0, 0, 0.35);
+      transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+      position: relative;
+    }
+
+    .omnibar-search-box:focus-within {
+      border-color: rgba(56, 189, 248, 0.65);
+      background: rgba(18, 26, 36, 0.88);
+      box-shadow: 
+        0 0 0 3px rgba(56, 189, 248, 0.2),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.4),
+        0 12px 32px rgba(0, 0, 0, 0.45);
+      transform: translateY(-1px);
+    }
+
+    /* Engine Selector Capsule Button */
+    .engine-dropdown-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .engine-selector-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      height: 34px;
+      padding: 0 10px 0 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 18px;
+      cursor: pointer;
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .engine-selector-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .engine-icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+    }
+
+    .engine-caret {
+      opacity: 0.6;
+      transition: transform 0.2s ease;
+    }
+
+    .engine-dropdown-wrap.open .engine-caret {
+      transform: rotate(180deg);
+    }
+
+    /* Engine Dropdown Menu */
+    .engine-dropdown-menu {
+      position: absolute;
+      top: 44px;
+      left: 0;
+      width: 210px;
+      background: rgba(14, 21, 30, 0.96);
+      backdrop-filter: blur(28px) saturate(200%);
+      -webkit-backdrop-filter: blur(28px) saturate(200%);
+      border: 1px solid var(--liquid-border-highlight);
+      border-radius: 16px;
+      padding: 6px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65), 0 0 20px rgba(56, 189, 248, 0.15);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px) scale(0.96);
+      transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .engine-dropdown-wrap.open .engine-dropdown-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .engine-option-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .engine-option-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .engine-option-item.active {
+      background: rgba(56, 189, 248, 0.16);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .engine-option-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .engine-tag-badge {
+      font-size: 0.65rem;
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.15);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    /* Input Field */
+    .omnibar-input-field {
+      flex: 1;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-family: var(--font-main);
+      padding: 0 12px;
+      min-width: 80px;
+    }
+
+    .omnibar-input-field::placeholder {
+      color: rgba(255, 255, 255, 0.42);
+      font-size: 0.84rem;
+    }
+
+    /* Clear and Go Buttons */
+    .omnibar-clear-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      border: none;
+      outline: none;
+      color: rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      line-height: 1;
+      margin-right: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+
+    .omnibar-clear-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .omnibar-clear-btn:hover {
+      background: rgba(255, 255, 255, 0.28);
+      color: #fff;
+    }
+
+    .omnibar-submit-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: 34px;
+      padding: 0 13px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.28) 0%, rgba(56, 189, 248, 0.14) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.48);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      flex-shrink: 0;
+    }
+
+    .omnibar-submit-btn:hover {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.45) 0%, rgba(56, 189, 248, 0.25) 100%);
+      border-color: rgba(56, 189, 248, 0.75);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+      transform: scale(1.02);
+    }
+
+    .omnibar-submit-btn:active {
+      transform: scale(0.96);
+    }
+
     .topbar-actions {
       display: flex;
       align-items: center;
@@ -1385,6 +1611,92 @@
           </div>
         </div>
 
+        <!-- Global Omnibar Web Search with Search Engine Selector -->
+        <div class="topbar-search-container">
+          <div class="omnibar-search-box" id="omnibarBox">
+            
+            <!-- Engine Dropdown Wrapper -->
+            <div class="engine-dropdown-wrap" id="engineDropdownWrap">
+              <button class="engine-selector-btn" id="engineSelectorBtn" type="button" title="点击切换搜索引擎">
+                <span class="engine-icon-wrap" id="currentEngineIcon"></span>
+                <span id="currentEngineName">Google</span>
+                <svg class="engine-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+
+              <!-- Dropdown Menu -->
+              <div class="engine-dropdown-menu" id="engineDropdownMenu">
+                <div class="engine-option-item active" data-engine="google">
+                  <div class="engine-option-left">
+                    <span class="engine-icon-wrap">
+                      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.9C6.2 7.3 8.9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.3 14.7c-.2-.7-.4-1.5-.4-2.7s.2-2 .4-2.7L1.6 6.4C.6 8.3 0 10.1 0 12s.6 3.7 1.6 5.6l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.3-6.7-5.3L1.6 16c1.9 3.8 5.8 7 10.4 7z"/></svg>
+                    </span>
+                    <span>Google</span>
+                  </div>
+                  <span class="engine-tag-badge">默认</span>
+                </div>
+
+                <div class="engine-option-item" data-engine="baidu">
+                  <div class="engine-option-left">
+                    <span class="engine-icon-wrap">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="#2932e1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3.5-3.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm-7 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm2.5-4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                    </span>
+                    <span>百度</span>
+                  </div>
+                </div>
+
+                <div class="engine-option-item" data-engine="bing">
+                  <div class="engine-option-left">
+                    <span class="engine-icon-wrap">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="#008373"><path d="M4.5 2v19.5l6-3.4 4.5 3.4 4.5-2.6V8.2l-6.8-2.4L9 7.4v8.2l-4.5 2.6z"/></svg>
+                    </span>
+                    <span>必应 Bing</span>
+                  </div>
+                </div>
+
+                <div class="engine-option-item" data-engine="github">
+                  <div class="engine-option-left">
+                    <span class="engine-icon-wrap">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                    </span>
+                    <span>GitHub</span>
+                  </div>
+                </div>
+
+                <div class="engine-option-item" data-engine="zhihu">
+                  <div class="engine-option-left">
+                    <span class="engine-icon-wrap">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="#0066FF"><path d="M5.5 4h13a1.5 1.5 0 0 1 1.5 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5v-13A1.5 1.5 0 0 1 5.5 4zm4.2 3.5H8.2v4.8h1.5V7.5zm4.8 0h-3.3v1.3h2.3c-.2 1.3-.8 2.5-1.8 3.3.6.5 1.4 1 2.3 1.3l.8-1.2c-.7-.3-1.3-.7-1.7-1.1.8-.7 1.2-1.7 1.4-2.6v-.7zm-3.3 5.8h1.5v2.8h-1.5v-2.8z"/></svg>
+                    </span>
+                    <span>知乎</span>
+                  </div>
+                </div>
+
+                <div class="engine-option-item" data-engine="bilibili">
+                  <div class="engine-option-left">
+                    <span class="engine-icon-wrap">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="#00AEEC"><path d="M18.5 4.5 20.8 2.2a1 1 0 0 0-1.4-1.4l-2.6 2.6H7.2L4.6.8A1 1 0 0 0 3.2 2.2l2.3 2.3C3.4 5.3 2 7.4 2 10v7a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5v-7c0-2.6-1.4-4.7-3.5-5.5zM8 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm8 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+                    </span>
+                    <span>哔哩哔哩</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Search Input Field -->
+            <input type="text" id="omnibarInput" class="omnibar-input-field" placeholder="使用 Google 搜索全网，按 Enter 在新标签页直达..." autocomplete="off">
+
+            <!-- Clear Button -->
+            <button class="omnibar-clear-btn" id="omnibarClearBtn" type="button" title="清空内容">&times;</button>
+
+            <!-- Submit Go Button -->
+            <button class="omnibar-submit-btn" id="omnibarSubmitBtn" type="button" title="在新标签页搜索 (Enter)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span>搜索</span>
+            </button>
+
+          </div>
+        </div>
+
         <div class="topbar-actions">
           <button class="top-pill-btn" id="shortcutAddBtn" title="同步与更新">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -2359,6 +2671,156 @@
     }
 
     window.addEventListener('resize', syncInitialDockSlider);
+
+    // ==========================================================================
+    // Global Omnibar Web Search Engine (Default: Google, Open in New Tab)
+    // ==========================================================================
+    const SEARCH_ENGINES = {
+      google: {
+        name: 'Google',
+        url: 'https://www.google.com/search?q=',
+        placeholder: '使用 Google 搜索全网，按 Enter 在新标签页直达...',
+        icon: '<svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.9C6.2 7.3 8.9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.3 14.7c-.2-.7-.4-1.5-.4-2.7s.2-2 .4-2.7L1.6 6.4C.6 8.3 0 10.1 0 12s.6 3.7 1.6 5.6l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.3-6.7-5.3L1.6 16c1.9 3.8 5.8 7 10.4 7z"/></svg>'
+      },
+      baidu: {
+        name: '百度',
+        url: 'https://www.baidu.com/s?wd=',
+        placeholder: '使用 百度 搜索全网，按 Enter 在新标签页直达...',
+        icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="#2932e1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3.5-3.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm-7 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm2.5-4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>'
+      },
+      bing: {
+        name: '必应',
+        url: 'https://www.bing.com/search?q=',
+        placeholder: '使用 必应 搜索全网，按 Enter 在新标签页直达...',
+        icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="#008373"><path d="M4.5 2v19.5l6-3.4 4.5 3.4 4.5-2.6V8.2l-6.8-2.4L9 7.4v8.2l-4.5 2.6z"/></svg>'
+      },
+      github: {
+        name: 'GitHub',
+        url: 'https://github.com/search?q=',
+        placeholder: '在 GitHub 搜索开源项目、代码与作者...',
+        icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>'
+      },
+      zhihu: {
+        name: '知乎',
+        url: 'https://www.zhihu.com/search?type=content&q=',
+        placeholder: '在 知乎 检索深度技术、回答与观点...',
+        icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="#0066FF"><path d="M5.5 4h13a1.5 1.5 0 0 1 1.5 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5v-13A1.5 1.5 0 0 1 5.5 4zm4.2 3.5H8.2v4.8h1.5V7.5zm4.8 0h-3.3v1.3h2.3c-.2 1.3-.8 2.5-1.8 3.3.6.5 1.4 1 2.3 1.3l.8-1.2c-.7-.3-1.3-.7-1.7-1.1.8-.7 1.2-1.7 1.4-2.6v-.7zm-3.3 5.8h1.5v2.8h-1.5v-2.8z"/></svg>'
+      },
+      bilibili: {
+        name: 'B站',
+        url: 'https://search.bilibili.com/all?keyword=',
+        placeholder: '在 哔哩哔哩 搜索视频与教程...',
+        icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="#00AEEC"><path d="M18.5 4.5 20.8 2.2a1 1 0 0 0-1.4-1.4l-2.6 2.6H7.2L4.6.8A1 1 0 0 0 3.2 2.2l2.3 2.3C3.4 5.3 2 7.4 2 10v7a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5v-7c0-2.6-1.4-4.7-3.5-5.5zM8 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm8 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>'
+      }
+    };
+
+    let currentEngineKey = localStorage.getItem('user_hub_search_engine') || 'google';
+
+    function setEngine(engineKey) {
+      if (!SEARCH_ENGINES[engineKey]) engineKey = 'google';
+      currentEngineKey = engineKey;
+      localStorage.setItem('user_hub_search_engine', engineKey);
+
+      const cfg = SEARCH_ENGINES[engineKey];
+      const iconEl = document.getElementById('currentEngineIcon');
+      const nameEl = document.getElementById('currentEngineName');
+      const inputEl = document.getElementById('omnibarInput');
+
+      if (iconEl) iconEl.innerHTML = cfg.icon;
+      if (nameEl) nameEl.textContent = cfg.name;
+      if (inputEl) inputEl.placeholder = cfg.placeholder;
+
+      // Update dropdown active highlight
+      document.querySelectorAll('.engine-option-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.engine === engineKey);
+      });
+    }
+
+    function executeWebSearch() {
+      const input = document.getElementById('omnibarInput');
+      const val = input.value.trim();
+      if (!val) {
+        input.focus();
+        return;
+      }
+      const cfg = SEARCH_ENGINES[currentEngineKey] || SEARCH_ENGINES.google;
+      const targetUrl = cfg.url + encodeURIComponent(val);
+      window.open(targetUrl, '_blank');
+      triggerToast(`已在 ${cfg.name} 新标签页搜索 "${val}"`);
+    }
+
+    // Bind dropdown toggle & select
+    const engineWrap = document.getElementById('engineDropdownWrap');
+    const engineBtn = document.getElementById('engineSelectorBtn');
+    const omnibarInput = document.getElementById('omnibarInput');
+    const omnibarClearBtn = document.getElementById('omnibarClearBtn');
+    const omnibarSubmitBtn = document.getElementById('omnibarSubmitBtn');
+
+    if (engineBtn && engineWrap) {
+      engineBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        engineWrap.classList.toggle('open');
+      });
+
+      document.querySelectorAll('.engine-option-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setEngine(item.dataset.engine);
+          engineWrap.classList.remove('open');
+          omnibarInput.focus();
+          triggerToast(`已切换搜索引擎为：${SEARCH_ENGINES[item.dataset.engine].name}`);
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!engineWrap.contains(e.target)) {
+          engineWrap.classList.remove('open');
+        }
+      });
+    }
+
+    if (omnibarInput) {
+      omnibarInput.addEventListener('input', () => {
+        if (omnibarClearBtn) {
+          omnibarClearBtn.classList.toggle('visible', omnibarInput.value.length > 0);
+        }
+      });
+
+      omnibarInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          executeWebSearch();
+        } else if (e.key === 'Escape') {
+          omnibarInput.value = '';
+          if (omnibarClearBtn) omnibarClearBtn.classList.remove('visible');
+          omnibarInput.blur();
+        }
+      });
+    }
+
+    if (omnibarClearBtn && omnibarInput) {
+      omnibarClearBtn.addEventListener('click', () => {
+        omnibarInput.value = '';
+        omnibarClearBtn.classList.remove('visible');
+        omnibarInput.focus();
+      });
+    }
+
+    if (omnibarSubmitBtn) {
+      omnibarSubmitBtn.addEventListener('click', executeWebSearch);
+    }
+
+    // Top Right Search Button Focus
+    const searchFocusTrigger = document.getElementById('searchFocusTrigger');
+    if (searchFocusTrigger && omnibarInput) {
+      searchFocusTrigger.addEventListener('click', () => {
+        omnibarInput.focus();
+        omnibarInput.select();
+      });
+    }
+
+    // Initialize Engine on page load
+    setEngine(currentEngineKey);
 
     // Initial render
     renderCards();
