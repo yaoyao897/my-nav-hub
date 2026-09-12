@@ -1410,7 +1410,7 @@
                   <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
                   <circle cx="12" cy="10" r="3"></circle>
                 </svg>
-                <span id="weatherLocationName">上海 · Shanghai HQ</span>
+                <span id="weatherLocationName">南京 · Nanjing Base</span>
                 <span style="font-size:0.65rem; opacity:0.6;">⚙️</span>
               </div>
               
@@ -1554,13 +1554,13 @@
       </div>
 
       <div class="quick-city-grid">
-        <button class="quick-city-btn" onclick="selectQuickCity('上海')">上海 (HQ)</button>
+        <button class="quick-city-btn" onclick="selectQuickCity('南京')">南京 (本地)</button>
+        <button class="quick-city-btn" onclick="selectQuickCity('上海')">上海</button>
         <button class="quick-city-btn" onclick="selectQuickCity('北京')">北京</button>
         <button class="quick-city-btn" onclick="selectQuickCity('深圳')">深圳</button>
         <button class="quick-city-btn" onclick="selectQuickCity('杭州')">杭州</button>
         <button class="quick-city-btn" onclick="selectQuickCity('苏州')">苏州</button>
         <button class="quick-city-btn" onclick="selectQuickCity('广州')">广州</button>
-        <button class="quick-city-btn" onclick="selectQuickCity('南京')">南京</button>
         <button class="quick-city-btn" onclick="selectQuickCity('武汉')">武汉</button>
         <button class="quick-city-btn" onclick="selectQuickCity('成都')">成都</button>
       </div>
@@ -1867,9 +1867,9 @@
     // Real-Time Live Weather & Cache Engine (Zero Browser Permission Popups)
     // ==========================================================================
     const DEFAULT_CITY = {
-      name: '上海 · Shanghai HQ',
-      lat: 31.2304,
-      lon: 121.4737
+      name: '南京 · Nanjing Base',
+      lat: 32.0603,
+      lon: 118.7969
     };
 
     const WMO_CODE_MAP = {
@@ -2039,13 +2039,13 @@
 
     // City Coordinates Dictionary
     const CITY_COORDS = {
+      '南京': { name: '南京 · Nanjing Base', lat: 32.0603, lon: 118.7969 },
       '上海': { name: '上海 · Shanghai HQ', lat: 31.2304, lon: 121.4737 },
       '北京': { name: '北京 · Capital Base', lat: 39.9042, lon: 116.4074 },
       '深圳': { name: '深圳 · Tech Center', lat: 22.5431, lon: 114.0579 },
       '广州': { name: '广州 · Canton Node', lat: 23.1291, lon: 113.2644 },
       '杭州': { name: '杭州 · West Lake', lat: 30.2741, lon: 120.1551 },
       '苏州': { name: '苏州 · Industrial Base', lat: 31.2989, lon: 120.5853 },
-      '南京': { name: '南京 · East Hub', lat: 32.0603, lon: 118.7969 },
       '武汉': { name: '武汉 · Central Node', lat: 30.5928, lon: 114.3055 },
       '成都': { name: '成都 · West Center', lat: 30.5728, lon: 104.0668 }
     };
@@ -2153,10 +2153,17 @@
       const saved = localStorage.getItem('user_hub_saved_city');
       if (saved) {
         try {
-          return JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+          // If previously defaulted to Shanghai, auto-migrate to Nanjing
+          if (parsed && (parsed.name.includes('上海') || parsed.name.includes('Shanghai'))) {
+            localStorage.setItem('user_hub_saved_city', JSON.stringify(DEFAULT_CITY));
+            localStorage.removeItem('user_hub_weather_cache');
+            return DEFAULT_CITY;
+          }
+          return parsed;
         } catch(e) {}
       }
-      // Default to Shanghai and save immediately
+      // Default to Nanjing and save immediately
       localStorage.setItem('user_hub_saved_city', JSON.stringify(DEFAULT_CITY));
       return DEFAULT_CITY;
     }
