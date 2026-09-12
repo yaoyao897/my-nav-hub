@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yuanjie's Hub · 个人专属网络收藏与导航台</title>
+  <meta name="description" content="袁杰的个人专属网络收藏导航台，涵盖工业数字化系统、AI大模型、知识研读与生产力工具。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-sans: 'Plus Jakarta Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+      
+      /* Dark Theme (Default) */
+      --bg-base: #0a0d14;
+      --bg-surface: rgba(18, 24, 38, 0.7);
+      --bg-surface-hover: rgba(28, 38, 58, 0.85);
+      --bg-card: rgba(16, 22, 34, 0.75);
+      --bg-card-hover: rgba(24, 33, 52, 0.9);
+      --bg-input: rgba(12, 17, 28, 0.8);
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: #3b82f6;
+      --border-highlight: rgba(255, 255, 255, 0.15);
+      
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-tertiary: #64748b;
+      
+      --accent-primary: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #8b5cf6;
+      
+      --glow-cyan: rgba(6, 182, 212, 0.22);
+      --glow-blue: rgba(59, 130, 246, 0.22);
+      --glow-purple: rgba(139, 92, 246, 0.22);
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.5);
+      --card-radius: 14px;
+    }
+
+    [data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: rgba(255, 255, 255, 0.85);
+      --bg-surface-hover: rgba(255, 255, 255, 0.98);
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --bg-card-hover: #ffffff;
+      --bg-input: rgba(241, 245, 249, 0.9);
+      
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --border-focus: #2563eb;
+      --border-highlight: rgba(0, 0, 0, 0.12);
+      
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #94a3b8;
+      
+      --accent-primary: #2563eb;
+      --accent-cyan: #0891b2;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --accent-purple: #7c3aed;
+      
+      --glow-cyan: rgba(8, 145, 178, 0.12);
+      --glow-blue: rgba(37, 99, 235, 0.12);
+      --glow-purple: rgba(124, 58, 237, 0.12);
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 8px 20px -4px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 16px 36px -8px rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      background-image: 
+        radial-gradient(circle at 12% 8%, var(--glow-blue) 0%, transparent 40%),
+        radial-gradient(circle at 88% 20%, var(--glow-purple) 0%, transparent 35%),
+        radial-gradient(circle at 50% 80%, var(--glow-cyan) 0%, transparent 45%);
+      background-attachment: fixed;
+    }
+
+    /* Top Navigation Header */
+    header.hub-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.85rem 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .header-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.4);
+    }
+
+    .brand-title-wrap h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--accent-primary);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .brand-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-tertiary);
+    }
+
+    /* Search & Filter bar */
+    .search-bar-wrap {
+      flex: 1;
+      max-width: 520px;
+      min-width: 260px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.65rem 1rem 0.65rem 2.6rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.88rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--text-tertiary);
+      pointer-events: none;
+    }
+
+    .search-shortcut {
+      position: absolute;
+      right: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-primary);
+      border-color: var(--border-highlight);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-purple));
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
+      transform: translateY(-1px);
+      color: #fff;
+    }
+
+    /* Main Container */
+    main.hub-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* Stats Overview Bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--card-radius);
+      padding: 1rem 1.25rem;
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .stat-card:hover, .stat-card.active {
+      border-color: var(--border-focus);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-info .stat-num {
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .stat-info .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-tertiary);
+    }
+
+    /* Quick Filter Tabs */
+    .filter-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .category-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pill-tab {
+      padding: 0.45rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .pill-tab:hover {
+      color: var(--text-primary);
+      border-color: var(--border-highlight);
+    }
+
+    .pill-tab.active {
+      background: var(--accent-primary);
+      color: #fff;
+      border-color: var(--accent-primary);
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+    }
+
+    .pill-tab .count {
+      font-size: 0.72rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .view-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .view-btn {
+      padding: 0.45rem 0.65rem;
+      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s;
+    }
+
+    .view-btn.active {
+      background: var(--accent-primary);
+      color: #fff;
+      border-color: var(--accent-primary);
+    }
+
+    /* Space Section */
+    .space-group {
+      margin-bottom: 2.5rem;
+    }
+
+    .space-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .space-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .space-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text-tertiary);
+    }
+
+    /* List Sub-section */
+    .list-section {
+      margin-bottom: 1.8rem;
+    }
+
+    .list-header {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .list-header::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      border-radius: 2px;
+      background: var(--accent-cyan);
+    }
+
+    /* Bookmarks Grid View */
+    .bookmarks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .bookmark-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--card-radius);
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.85rem;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bookmark-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--border-focus), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .bookmark-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-highlight);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    .bookmark-card:hover::after {
+      opacity: 1;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+
+    .card-favicon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--accent-cyan);
+    }
+
+    .card-favicon img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+    }
+
+    .card-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+      flex-wrap: wrap;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      word-break: break-word;
+      transition: color 0.15s;
+    }
+
+    .card-title:hover {
+      color: var(--accent-primary);
+    }
+
+    .env-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.12rem 0.45rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .env-lan {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .env-ext {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .env-saas {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--accent-primary);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .env-prod {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .env-prod::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent-rose);
+      box-shadow: 0 0 6px var(--accent-rose);
+    }
+
+    .card-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-url-mono {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-tertiary);
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .icon-action-btn {
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .icon-action-btn:hover {
+      background: var(--accent-primary);
+      color: #fff;
+      border-color: var(--accent-primary);
+    }
+
+    /* Table View Styles */
+    .bookmarks-table-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--card-radius);
+      overflow-x: auto;
+      margin-bottom: 2rem;
+    }
+
+    table.bookmarks-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    table.bookmarks-table th {
+      padding: 0.85rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-tertiary);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-subtle);
+      white-space: nowrap;
+    }
+
+    table.bookmarks-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      vertical-align: middle;
+    }
+
+    table.bookmarks-table tr:hover td {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-primary);
+    }
+
+    table.bookmarks-table td.title-col {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    table.bookmarks-table td.url-col {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      max-width: 320px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 100;
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-bar-wrap {
+        max-width: 100%;
+      }
+      .bookmarks-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header class="hub-header">
+    <div class="header-container">
+      <div class="brand-section">
+        <div class="brand-avatar">Y</div>
+        <div class="brand-title-wrap">
+          <h1>Yuanjie's Hub <span class="brand-badge">专属收藏</span></h1>
+          <div class="brand-subtitle">个人数字化工作台 · Toby 极速网络导航</div>
+        </div>
+      </div>
+
+      <div class="search-bar-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="搜索系统名称、IP/域名、备注、分组... (Cmd+K)">
+        <span class="search-shortcut">⌘K</span>
+      </div>
+
+      <div class="header-actions">
+        <button id="copyAllBtn" class="btn" title="复制所有书签链接">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          复制全部
+        </button>
+        <button id="exportHtmlBtn" class="btn btn-primary" title="导出为标准浏览器书签 HTML">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          导出书签
+        </button>
+        <button id="themeToggleBtn" class="btn" title="切换浅色/深色主题">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="hub-content">
+    <!-- Quick Statistics Overview -->
+    <section class="stats-bar">
+      <div class="stat-card active" data-filter="all">
+        <div class="stat-icon">📑</div>
+        <div class="stat-info">
+          <div class="stat-num" id="countAll">59</div>
+          <div class="stat-label">全部收藏</div>
+        </div>
+      </div>
+      <div class="stat-card" data-filter="space-wanwu">
+        <div class="stat-icon">🏭</div>
+        <div class="stat-info">
+          <div class="stat-num">24</div>
+          <div class="stat-label">万物智汇·工业</div>
+        </div>
+      </div>
+      <div class="stat-card" data-filter="category-ai">
+        <div class="stat-icon">🤖</div>
+        <div class="stat-info">
+          <div class="stat-num">5</div>
+          <div class="stat-label">AI·前沿实验室</div>
+        </div>
+      </div>
+      <div class="stat-card" data-filter="env-lan">
+        <div class="stat-icon">🏢</div>
+        <div class="stat-info">
+          <div class="stat-num">13</div>
+          <div class="stat-label">内网 192.168</div>
+        </div>
+      </div>
+      <div class="stat-card" data-filter="env-prod">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-info">
+          <div class="stat-num">5</div>
+          <div class="stat-label">生产库系统</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & View Controls -->
+    <section class="filter-section">
+      <div class="category-pills">
+        <button class="pill-tab active" data-category="all">全部 <span class="count">59</span></button>
+        <button class="pill-tab" data-category="万物智汇">🏭 万物智汇 <span class="count">24</span></button>
+        <button class="pill-tab" data-category="AI TOOL">🤖 AI 工具 <span class="count">5</span></button>
+        <button class="pill-tab" data-category="公司内网测试系统">🧪 测试系统 <span class="count">12</span></button>
+        <button class="pill-tab" data-category="外网系统地址">🌐 外网地址 <span class="count">8</span></button>
+        <button class="pill-tab" data-category="常读与资产">📚 常读与资产 <span class="count">7</span></button>
+        <button class="pill-tab" data-category="职场与社交">💼 职场与社交 <span class="count">6</span></button>
+        <button class="pill-tab" data-category="娱乐与指引">🎵 娱乐与指引 <span class="count">17</span></button>
+      </div>
+
+      <div class="view-controls">
+        <button id="viewGridBtn" class="view-btn active" title="网格卡片视图">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        </button>
+        <button id="viewTableBtn" class="view-btn" title="紧凑表格视图">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Main Dynamic Content Container -->
+    <div id="bookmarksContainer"></div>
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toastMsg">已复制链接到剪贴板！</span>
+  </div>
+
+  <script>
+    const RAW_BOOKMARKS = [{"id": "e316d5de-413a-4880-9733-8a2c7c97928a", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "ebb82349-0c90-4a28-a070-c99afed0a437", "listTitle": "客户内网", "title": "星宇MES", "customTitle": "", "displayName": "星宇MES", "url": "http://192.168.20.107:8090/home", "domain": "192.168.20.107:8090", "favIconUrl": "http://192.168.20.107:8090/xingyu/favicon.ico", "description": "", "env": "lan", "isProd": false, "createdAt": "2026-07-13T06:14:50.928455Z"}, {"id": "bffbba4e-2ba3-4f6b-9037-17aa363b3081", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "77400188-9780-4224-bde4-74e88157f83e", "listTitle": "外网系统地址", "title": "盈德气体包装气管理系统", "customTitle": "生产-盈德气体包装气管理系统", "displayName": "生产-盈德气体包装气管理系统", "url": "https://pgm.yingde.com/login/account?redirect=/production-management", "domain": "pgm.yingde.com", "favIconUrl": "https://pgm.yingde.com/favicon.ico", "description": "盈德气体包装气管理系统", "env": "saas", "isProd": true, "createdAt": "2025-11-25T02:57:31.725065Z"}, {"id": "ea323237-f6c4-4fd7-a254-b37d9ad8ba2d", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "77400188-9780-4224-bde4-74e88157f83e", "listTitle": "外网系统地址", "title": "盈德气体包装气管理系统", "customTitle": "UAT-盈德气体包装气管理系统", "displayName": "UAT-盈德气体包装气管理系统", "url": "https://pgmuat.yingde.com/login/account?redirect=/home", "domain": "pgmuat.yingde.com", "favIconUrl": "https://pgmuat.yingde.com/favicon.ico", "description": "盈德气体包装气管理系统", "env": "saas", "isProd": false, "createdAt": "2025-11-25T03:04:55.038368Z"}, {"id": "ded60bcc-d245-4663-badd-9e992f63168f", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "77400188-9780-4224-bde4-74e88157f83e", "listTitle": "外网系统地址", "title": "盈德气体包装气管理系统", "customTitle": "本地-盈德气体包装气管理系统", "displayName": "本地-盈德气体包装气管理系统", "url": "http://192.168.3.203:8087/basic-data/basic-info/material-list", "domain": "192.168.3.203:8087", "favIconUrl": "http://192.168.3.203:8087/favicon.ico", "description": "盈德气体包装气管理系统", "env": "lan", "isProd": false, "createdAt": "2025-11-28T07:31:52.101932Z"}, {"id": "27e5e217-dcf2-466b-89ee-1025c1117f39", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "77400188-9780-4224-bde4-74e88157f83e", "listTitle": "外网系统地址", "title": "苏州博洋化学股份有限公司", "customTitle": "", "displayName": "苏州博洋化学股份有限公司", "url": "http://218.90.122.177:5001/home", "domain": "218.90.122.177:5001", "favIconUrl": "http://218.90.122.177:5001/icon.png", "description": "", "env": "ext-ip", "isProd": false, "createdAt": "2025-11-25T03:07:32.848133Z"}, {"id": "98630b7a-62bd-4d2e-b5db-889e4f192cb8", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "77400188-9780-4224-bde4-74e88157f83e", "listTitle": "外网系统地址", "title": "三木", "customTitle": "", "displayName": "三木", "url": "http://121.41.28.31:62088/home", "domain": "121.41.28.31:62088", "favIconUrl": "", "description": "", "env": "ext-ip", "isProd": false, "createdAt": "2025-12-23T01:04:49.413402Z"}, {"id": "c3a8e39a-1a2f-4780-9138-771e13cb4218", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "77400188-9780-4224-bde4-74e88157f83e", "listTitle": "外网系统地址", "title": "首页", "customTitle": "QMS演示系统", "displayName": "QMS演示系统", "url": "http://121.41.28.31:60563/home", "domain": "121.41.28.31:60563", "favIconUrl": "http://121.41.28.31:60563/favicon.ico", "description": "Base on 中宁硅业", "env": "ext-ip", "isProd": false, "createdAt": "2025-11-25T03:10:06.096926Z"}, {"id": "9e33b361-bb70-45ae-9161-d41b4a403360", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "77400188-9780-4224-bde4-74e88157f83e", "listTitle": "外网系统地址", "title": "个人中心", "customTitle": "生产-亚格泰MOMS", "displayName": "生产-亚格泰MOMS", "url": "http://218.23.227.3:5011/home", "domain": "218.23.227.3:5011", "favIconUrl": "http://218.23.227.3:5011/image/icon.png", "description": "亚格泰客户生产库地址", "env": "ext-ip", "isProd": true, "createdAt": "2025-11-25T03:19:38.510234Z"}, {"id": "87391b0d-14ea-4dde-9cbe-ee2156f8cf63", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "77400188-9780-4224-bde4-74e88157f83e", "listTitle": "外网系统地址", "title": "主页 - 南大光电半导体材料有限公司", "customTitle": "生产-南大半导体识别工具", "displayName": "生产-南大半导体识别工具", "url": "http://121.41.28.31:62078/#/home/index", "domain": "121.41.28.31:62078", "favIconUrl": "http://121.41.28.31:62078/favicon.ico", "description": "南大光电半导体材料有限公司", "env": "ext-ip", "isProd": true, "createdAt": "2025-11-25T03:18:07.355669Z"}, {"id": "5341dddf-4da6-4fd8-b9c9-f25226c856d5", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "南京大根电子材料有限公司", "customTitle": "", "displayName": "南京大根电子材料有限公司", "url": "http://192.168.3.203:8091/login/account?redirect=/home", "domain": "192.168.3.203:8091", "favIconUrl": "http://192.168.3.203:8091/favicon.ico", "description": "", "env": "lan", "isProd": false, "createdAt": "2025-11-25T02:56:01.916419Z"}, {"id": "3112811f-2feb-4eb4-8a3e-99b7ffc228dd", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "波米科技", "customTitle": "", "displayName": "波米科技", "url": "http://192.168.3.201:5065/login?redirect=/home", "domain": "192.168.3.201:5065", "favIconUrl": "http://192.168.3.201:5065/favicon.ico", "description": "", "env": "lan", "isProd": false, "createdAt": "2025-12-16T07:56:57.474258Z"}, {"id": "e35299ba-497b-4029-8a50-8ada1b5af1d8", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "LOGIN", "customTitle": "裕能能耗", "displayName": "裕能能耗", "url": "http://192.168.3.202/zyyn/login", "domain": "192.168.3.202", "favIconUrl": "http://192.168.3.202/zyyn/favicon.ico", "description": "LOGIN", "env": "lan", "isProd": false, "createdAt": "2025-12-17T12:13:30.172407Z"}, {"id": "ea12b10d-089b-411d-9976-f1b3499c00db", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "乐远博力", "customTitle": "", "displayName": "乐远博力", "url": "http://192.168.3.200:5034/home", "domain": "192.168.3.200:5034", "favIconUrl": "http://192.168.3.200:5034/favicon.ico", "description": "", "env": "lan", "isProd": false, "createdAt": "2025-12-23T06:23:49.122808Z"}, {"id": "10be06f8-acac-4c01-8ec6-21090d236555", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "赫纯", "customTitle": "", "displayName": "赫纯", "url": "http://192.168.3.201:5090/home", "domain": "192.168.3.201:5090", "favIconUrl": "http://192.168.3.201:5090/favicon.ico", "description": "", "env": "lan", "isProd": false, "createdAt": "2026-01-21T05:48:05.221022Z"}, {"id": "bff523b8-f6a5-42e4-99f1-64ca0a94388c", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "康菲胶粘剂", "customTitle": "", "displayName": "康菲胶粘剂", "url": "http://121.41.28.31:62104/", "domain": "121.41.28.31:62104", "favIconUrl": "http://121.41.28.31:62104/favicon.ico", "description": "", "env": "ext-ip", "isProd": false, "createdAt": "2025-12-25T02:19:04.408987Z"}, {"id": "93a3da49-e14a-4982-ace4-1694df9d12b0", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "首页 - 南大光电半导体材料有限公司", "customTitle": "南大光电半导体材料有限公司", "displayName": "南大光电半导体材料有限公司", "url": "http://192.168.3.203:5002/#/home/index", "domain": "192.168.3.203:5002", "favIconUrl": "http://192.168.3.203:5002/favicon.ico", "description": "南大半导体-滁州- ALD", "env": "lan", "isProd": false, "createdAt": "2026-03-05T02:15:05.90317Z"}, {"id": "aac0253f-99b2-4316-bea9-6e53f9f64375", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "万物智汇", "customTitle": "星宇-演示", "displayName": "星宇-演示", "url": "http://121.41.28.31:62130/home", "domain": "121.41.28.31:62130", "favIconUrl": "", "description": "万物智汇", "env": "ext-ip", "isProd": false, "createdAt": "2026-04-03T01:05:51.836178Z"}, {"id": "a9b539d4-919f-4713-a5a8-ad7fbba5e018", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "万物智汇", "customTitle": "QMS基座", "displayName": "QMS基座", "url": "http://192.168.4.144:5173/home", "domain": "192.168.4.144:5173", "favIconUrl": "http://192.168.4.144:5173/favicon.ico", "description": "万物智汇", "env": "lan", "isProd": false, "createdAt": "2026-02-26T05:34:26.592657Z"}, {"id": "7ed1b5c2-468b-4f40-b860-969c7eeeb0fe", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "万物智汇", "customTitle": "三月", "displayName": "三月", "url": "http://192.168.3.100:7129/home", "domain": "192.168.3.100:7129", "favIconUrl": "http://192.168.3.100:7129/favicon.ico", "description": "万物智汇", "env": "lan", "isProd": false, "createdAt": "2026-05-07T07:23:35.820307Z"}, {"id": "a0374d2e-1909-40d0-b2ba-08498336fe0c", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "万物智汇演示系统", "customTitle": "", "displayName": "万物智汇演示系统", "url": "http://192.168.3.202:3022/basic-data/external-package-material-data/flow-external-package-material-file", "domain": "192.168.3.202:3022", "favIconUrl": "http://192.168.3.212:9987/file/download/2094600516679057409", "description": "", "env": "lan", "isProd": false, "createdAt": "2026-09-07T06:34:02.114466Z"}, {"id": "a9319616-b4ba-4225-ba09-e17e3ef12019", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "92e7135e-7cdc-4f81-b64b-32964e4b1478", "listTitle": "公司内网测试系统", "title": "万物智汇", "customTitle": "", "displayName": "万物智汇", "url": "http://121.41.28.31:60764/quality-assurance/sPC-statistics/qcp-technology-overview", "domain": "121.41.28.31:60764", "favIconUrl": "http://121.41.28.31:60764/favicon.ico", "description": "", "env": "ext-ip", "isProd": false, "createdAt": "2026-09-09T11:32:47.116167Z"}, {"id": "c4f0fe0d-8d58-482b-9620-867d473cfa98", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "5d23a3a9-f3c4-4b51-9b4c-79d25dc518a5", "listTitle": "参考系统", "title": "团队文件 - 蓝湖", "customTitle": "", "displayName": "团队文件 - 蓝湖", "url": "https://lanhuapp.com/dashboard/#/item?tid=88e80976-0395-4254-9f66-ee823a75b126", "domain": "lanhuapp.com", "favIconUrl": "https://lhcdn.lanhuapp.com/dashboard/production/favicon.ico", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-11-26T07:02:47.129446Z"}, {"id": "092a0d82-b581-4f29-952c-8c7b65415d8a", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "5d23a3a9-f3c4-4b51-9b4c-79d25dc518a5", "listTitle": "参考系统", "title": "畅捷通 T+", "customTitle": "", "displayName": "畅捷通 T+", "url": "https://h4t.chanjet.com/tplus/view/portal/portal.html?_from=exp", "domain": "h4t.chanjet.com", "favIconUrl": "https://t.static.chanjet.com/loginStaticfiles/18.000.000.0000/favicon.ico", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-11-25T03:03:43.07943Z"}, {"id": "e03f4fef-3053-475b-a995-f83047abfb87", "spaceId": "668278bd-3804-47ff-b143-2f3348ecdca2", "spaceName": "万物智汇", "spaceType": "public", "listId": "5d23a3a9-f3c4-4b51-9b4c-79d25dc518a5", "listTitle": "参考系统", "title": "AxureShop产品原型网 – Axure原创素材交易平台 唯一官网：axureshop.com", "customTitle": "", "displayName": "AxureShop产品原型网 – Axure原创素材交易平台 唯一官网：axureshop.com", "url": "https://www.axureshop.com/", "domain": "axureshop.com", "favIconUrl": "https://cdn8.axureshop.com/wp-content/uploads/2018/05/starshop-150x150.png", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-12-17T07:40:23.311642Z"}, {"id": "02855c9f-a33e-4555-8e7d-98fc3a2c4bb0", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "b7710ac6-89fe-4a75-b18b-b7abcadd9b8b", "listTitle": "Access Toby", "title": "IOS Mobile", "customTitle": "IOS Mobile", "displayName": "IOS Mobile", "url": "https://apps.apple.com/ca/app/toby-for-tabs/id6450715143", "domain": "apps.apple.com", "favIconUrl": "https://www.apple.com/favicon.ico", "description": "IOS Mobile", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "b8483df5-59d8-4266-ab3f-d686ad4a34b6", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "b7710ac6-89fe-4a75-b18b-b7abcadd9b8b", "listTitle": "Access Toby", "title": "Android Mobile", "customTitle": "Android Mobile", "displayName": "Android Mobile", "url": "https://play.google.com/store/apps/details?id=co.axiomzen.toby&hl=en_CA", "domain": "play.google.com", "favIconUrl": "https://www.gstatic.com/android/market_images/web/favicon_v3.ico", "description": "Android Mobile", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "7e94d6b1-93b2-45cd-9aab-349bfd1831ed", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "bbbf15f9-6790-41ef-84db-df48e9fa57d3", "listTitle": "Join the community", "title": "Discord", "customTitle": "Discord", "displayName": "Discord", "url": "https://discord.com/invite/swbqxAJCUD", "domain": "discord.com", "favIconUrl": "https://discord.com/assets/847541504914fd33810e70a0ea73177e.ico", "description": "Join our community!", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "7a5249a9-d3f2-4141-8d25-7093846df44b", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "bbbf15f9-6790-41ef-84db-df48e9fa57d3", "listTitle": "Join the community", "title": "Nolt", "customTitle": "Nolt", "displayName": "Nolt", "url": "https://feedback.gettoby.com", "domain": "gettoby.com", "favIconUrl": "https://www.gettoby.com/img/icons/favicon-32x32.png", "description": "Nolt", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "b7380391-4b87-4937-8d33-eec790591250", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "bbbf15f9-6790-41ef-84db-df48e9fa57d3", "listTitle": "Join the community", "title": "Toby Twitter", "customTitle": "Toby Twitter", "displayName": "Toby Twitter", "url": "https://twitter.com/TobyForTabs/", "domain": "twitter.com", "favIconUrl": "https://abs.twimg.com/favicons/twitter.3.ico", "description": "Keep up to date", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "3bf27259-11d6-4b13-9021-f9cd0eba8b5e", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "bc1cd548-39d9-47a3-bcef-2f17897286de", "listTitle": "How to Invite", "title": "Invite to Organization", "customTitle": "Invite to Organization", "displayName": "Invite to Organization", "url": "https://help.gettoby.com/support/solutions/articles/66000494303?utm_source=toby_premade", "domain": "gettoby.com", "favIconUrl": "https://www.gettoby.com/img/icons/favicon-32x32.png", "description": "Invite to Organization", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "55862b9c-8a86-4f87-920b-94d88cb64764", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "bc1cd548-39d9-47a3-bcef-2f17897286de", "listTitle": "How to Invite", "title": "Invite to Space", "customTitle": "Invite to Space", "displayName": "Invite to Space", "url": "https://help.gettoby.com/support/solutions/articles/66000494304?utm_source=toby_premade", "domain": "gettoby.com", "favIconUrl": "https://www.gettoby.com/img/icons/favicon-32x32.png", "description": "Invite to Space", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "1033b5d9-ab00-4697-a5a3-bd8b759c4c8c", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "e23ce0f5-e4b2-4aff-97c4-4067554ce6c8", "listTitle": "Top Toby Features", "title": "Save Session", "customTitle": "Save Session", "displayName": "Save Session", "url": "https://help.gettoby.com/support/solutions/articles/66000521580?utm_source=toby_premade", "domain": "gettoby.com", "favIconUrl": "https://www.gettoby.com/img/icons/favicon-32x32.png", "description": "Save Session", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "614d779c-6ce6-4b7e-a4ef-7a68c49247dd", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "e23ce0f5-e4b2-4aff-97c4-4067554ce6c8", "listTitle": "Top Toby Features", "title": "To/Links", "customTitle": "To/Links", "displayName": "To/Links", "url": "https://www.gettoby.com/blog/unlocking-the-power-of-toby-links?utm_source=toby_premade", "domain": "gettoby.com", "favIconUrl": "https://www.gettoby.com/img/icons/favicon-32x32.png", "description": "Create custom Links", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "2eeb4ba1-f932-4dc5-9723-5a14bf71ab62", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "e23ce0f5-e4b2-4aff-97c4-4067554ce6c8", "listTitle": "Top Toby Features", "title": "Next", "customTitle": "Next", "displayName": "Next", "url": "https://www.gettoby.com/blog/introducing-next?utm_source=toby_premade", "domain": "gettoby.com", "favIconUrl": "https://www.gettoby.com/img/icons/favicon-32x32.png", "description": "Prioritize your tabs", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "db4a3a1c-4e69-4b28-a3ee-1d846279ef41", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "e23ce0f5-e4b2-4aff-97c4-4067554ce6c8", "listTitle": "Top Toby Features", "title": "Search", "customTitle": "Search", "displayName": "Search", "url": "https://www.gettoby.com/blog/toby-search?utm_source=toby_premade", "domain": "gettoby.com", "favIconUrl": "https://www.gettoby.com/img/icons/favicon-32x32.png", "description": "Find your tabs quickly", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "4917e9df-7b6c-4f91-8b0d-909ad1648d15", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "e23ce0f5-e4b2-4aff-97c4-4067554ce6c8", "listTitle": "Top Toby Features", "title": "New note", "customTitle": "Add notes to collections!", "displayName": "Add notes to collections!", "url": "/note.html", "domain": "", "favIconUrl": "", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "023f618c-2446-446e-8cba-3195e70a3f04", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "7996960f-59a2-4437-b8bc-b5b8c93ced63", "listTitle": "Getting started with Toby", "title": "Toby basics", "customTitle": "Toby basics", "displayName": "Toby basics", "url": "https://help.gettoby.com/support/solutions/66000120122?utm_source=toby_premade", "domain": "help.gettoby.com", "favIconUrl": "https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/66015078637/fav_icon/kZ_lp7itTJFvT0jsOMOcM7_nGg3nu80EmQ.png", "description": "Video", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "9332bca9-0595-4f37-bcd2-16bd47a4b26f", "spaceId": "dc9f7a7a-cd0a-4d95-8ab6-86bfc0d138fd", "spaceName": "How to Use Toby", "spaceType": "public", "listId": "7996960f-59a2-4437-b8bc-b5b8c93ced63", "listTitle": "Getting started with Toby", "title": "Help Center", "customTitle": "Help Center", "displayName": "Help Center", "url": "https://help.gettoby.com/support/home?utm_source=toby_premade", "domain": "help.gettoby.com", "favIconUrl": "https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/66015078637/fav_icon/kZ_lp7itTJFvT0jsOMOcM7_nGg3nu80EmQ.png", "description": "Find your answers", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "52e6d76e-ab85-4143-8dd3-58963e614764", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "95625baa-bd58-49d2-9420-15f9aa27dc20", "listTitle": "AI TOOL", "title": "ChatGPT", "customTitle": "", "displayName": "ChatGPT", "url": "https://chatgpt.com/", "domain": "chatgpt.com", "favIconUrl": "https://cdn.oaistatic.com/assets/favicon-l4nq08hd.svg", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-11-25T03:43:17.070452Z"}, {"id": "de2cdf74-0126-4d8d-976e-7891b0bfe02b", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "95625baa-bd58-49d2-9420-15f9aa27dc20", "listTitle": "AI TOOL", "title": "Grok", "customTitle": "", "displayName": "Grok", "url": "https://grok.com/", "domain": "grok.com", "favIconUrl": "https://grok.com/images/favicon-light.png", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-11-27T04:17:27.510324Z"}, {"id": "c3f12ad7-d92b-4dc3-8382-c0413131c19a", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "95625baa-bd58-49d2-9420-15f9aa27dc20", "listTitle": "AI TOOL", "title": "Claude", "customTitle": "", "displayName": "Claude", "url": "https://claude.ai/new", "domain": "claude.ai", "favIconUrl": "https://claude.ai/favicon.ico", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-11-27T04:17:51.031491Z"}, {"id": "93a4b20b-5dd6-41c8-9a8d-02168abd919f", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "95625baa-bd58-49d2-9420-15f9aa27dc20", "listTitle": "AI TOOL", "title": "Nano Banana Pro - Google Gemini 3 Pro Image Preview", "customTitle": "", "displayName": "Nano Banana Pro - Google Gemini 3 Pro Image Preview", "url": "https://nano-banana-pro.ai/?utm_source=google&utm_medium=cpc&utm_campaign=23308173772&utm_adgroup=188733434106&utm_term=nano%20banana%20pro&gad_source=1&gad_campaignid=23308173772&gbraid=0AAAABCJwmU6K_cFGRyzkgWP8shlLlxPnj&gclid=Cj0KCQiAi9rJBhCYARIsALyPDtsozA_TFMW2cm7tWIi5z4qZQhBBNZHFTHJKpWJauDBFVgfe9ZSfkLEaArKcEALw_wcB", "domain": "nano-banana-pro.ai", "favIconUrl": "https://nano-banana-pro.ai/favicon.ico", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-12-09T05:11:12.761161Z"}, {"id": "91c0da3f-63f8-4b12-b7e4-2ec9703fae75", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "95625baa-bd58-49d2-9420-15f9aa27dc20", "listTitle": "AI TOOL", "title": "Veo 3 | Google AI Studio", "customTitle": "", "displayName": "Veo 3 | Google AI Studio", "url": "https://aistudio.google.com/prompts/11Rx5hh1gUoe5qi24X3FT7krNSG8N1siV", "domain": "aistudio.google.com", "favIconUrl": "https://www.gstatic.com/aistudio/ai_studio_favicon_2_32x32.png", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-12-09T05:31:31.123258Z"}, {"id": "bcfecf28-36ad-4f86-b929-3bdd3da08515", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "a720cdcd-bd71-46f9-8093-9fc1950dd569", "listTitle": "Dec 01 at 21:31", "title": "小红书 - 你的生活兴趣社区", "customTitle": "", "displayName": "小红书 - 你的生活兴趣社区", "url": "https://www.xiaohongshu.com/explore?channel_id=homefeed_recommend", "domain": "xiaohongshu.com", "favIconUrl": "https://fe-video-qc.xhscdn.com/fe-platform/ed8fe781ce9e16c1bfac2cd962f0721edabe2e49.ico", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-12-01T13:31:58.896531Z"}, {"id": "485b882e-efa6-42d7-9b7d-dff0917c52f9", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "a720cdcd-bd71-46f9-8093-9fc1950dd569", "listTitle": "Dec 01 at 21:31", "title": "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "customTitle": "", "displayName": "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "url": "https://www.bilibili.com/", "domain": "bilibili.com", "favIconUrl": "https://i0.hdslb.com/bfs/static/jinkela/long/images/favicon.ico", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-12-01T13:31:58.896531Z"}, {"id": "cb0495a9-bb1f-4d73-974f-bae43dc1bc4b", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "a720cdcd-bd71-46f9-8093-9fc1950dd569", "listTitle": "Dec 01 at 21:31", "title": "bettertouchtool | MacKed - 专注于Mac破解资源的分享与下载", "customTitle": "", "displayName": "bettertouchtool | MacKed - 专注于Mac破解资源的分享与下载", "url": "https://macked.app/?s=bettertouchtool&type=post", "domain": "macked.app", "favIconUrl": "https://macked.app/wp-content/uploads/favicon.png", "description": "", "env": "saas", "isProd": false, "createdAt": "2026-01-15T15:02:02.804129Z"}, {"id": "7517a87c-4a1e-414c-bd0c-58fe924e7b45", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "a720cdcd-bd71-46f9-8093-9fc1950dd569", "listTitle": "Dec 01 at 21:31", "title": "NIV 1984 Bible (PDF)", "customTitle": "", "displayName": "NIV 1984 Bible (PDF)", "url": "https://www.christunite.com/index.php/bible/niv-1984-bible-pdf", "domain": "christunite.com", "favIconUrl": "", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-12-08T12:09:25.782337Z"}, {"id": "6ec002ed-2457-4783-9efe-42f86dfaf2c0", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "a720cdcd-bd71-46f9-8093-9fc1950dd569", "listTitle": "Dec 01 at 21:31", "title": "约翰福音 8 和合本 | WeDevote Bible", "customTitle": "", "displayName": "约翰福音 8 和合本 | WeDevote Bible", "url": "https://wd.bible/en/bible/jhn.8.cunps", "domain": "wd.bible", "favIconUrl": "https://wd.bible/wd/images/favicon-32x32.svg", "description": "", "env": "saas", "isProd": false, "createdAt": "2026-02-02T23:39:07.379684Z"}, {"id": "50d048bb-09bb-4188-a178-2d1e2ba67310", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "28d6335b-7a41-4a1d-8c41-d2ccb7b4eb70", "listTitle": "My First Collection", "title": "Target Budget", "customTitle": "", "displayName": "Target Budget", "url": "https://www.notion.so/Target-Budget-74510531d6094ca4bd830df68365116a", "domain": "notion.so", "favIconUrl": "https://www.notion.so/images/favicon.ico", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:26.641778Z"}, {"id": "d3d9ee00-8b68-4bec-bced-15cf607a28c6", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "28d6335b-7a41-4a1d-8c41-d2ccb7b4eb70", "listTitle": "My First Collection", "title": "Z-Library – the world’s largest e-book library. Your gateway to knowledge and culture.", "customTitle": "", "displayName": "Z-Library – the world’s largest e-book library. Your gateway to knowledge and culture.", "url": "https://z-lib.help/", "domain": "z-lib.help", "favIconUrl": "https://z-lib.help/favicon.svg", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-11-25T03:42:28.982326Z"}, {"id": "bb1ccaa4-5740-4870-967d-0f4883e49228", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "8d8d4122-7972-4713-a4a0-6924df0e27a4", "listTitle": "Social", "title": "Instagram", "customTitle": "Instagram", "displayName": "Instagram", "url": "https://www.instagram.com", "domain": "instagram.com", "favIconUrl": "https://static.cdninstagram.com/rsrc.php/y4/r/QaBlI0OZiks.ico", "description": "Instagram", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "df3e0261-1fa0-4a8f-8e1c-dd1aed1f3d0b", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "8d8d4122-7972-4713-a4a0-6924df0e27a4", "listTitle": "Social", "title": "X", "customTitle": "X", "displayName": "X", "url": "https://x.com", "domain": "x.com", "favIconUrl": "https://abs.twimg.com/favicons/twitter.3.ico", "description": "X", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "a9d3ce5e-5f80-4829-9124-bf7e140eeb6e", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "8d8d4122-7972-4713-a4a0-6924df0e27a4", "listTitle": "Social", "title": "Facebook", "customTitle": "Facebook", "displayName": "Facebook", "url": "https://www.facebook.com", "domain": "facebook.com", "favIconUrl": "https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico", "description": "Facebook", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "901d0fbe-b003-41db-a3c8-883cd914a285", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "8d8d4122-7972-4713-a4a0-6924df0e27a4", "listTitle": "Social", "title": "《死亡诗社》百度云阿里网盘.BD1080P|英语中字（1989）_人人电影网,百度云盘,阿里网盘夸克下载", "customTitle": "", "displayName": "《死亡诗社》百度云阿里网盘.BD1080P|英语中字（1989）_人人电影网,百度云盘,阿里网盘夸克下载", "url": "https://www.rrdynb.com/movie/2019/0215/2977.html", "domain": "rrdynb.com", "favIconUrl": "https://www.rrdynb.com/favicon.ico", "description": "", "env": "saas", "isProd": false, "createdAt": "2026-02-23T12:53:09.740677Z"}, {"id": "c60cf94c-dc7b-428d-a91e-ae1a1a45efae", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "8d8d4122-7972-4713-a4a0-6924df0e27a4", "listTitle": "Social", "title": "百度网盘综合频道 – Telegram", "customTitle": "", "displayName": "百度网盘综合频道 – Telegram", "url": "https://t.me/s/bdwpzhpd?q=%23%E6%90%8F%E5%87%BB%E4%BF%B1%E4%B9%90%E9%83%A8", "domain": "t.me", "favIconUrl": "https://telegram.org/img/favicon.ico", "description": "", "env": "saas", "isProd": false, "createdAt": "2026-02-23T11:56:29.17896Z"}, {"id": "c735571e-be63-4403-803e-9b49052c3fec", "spaceId": "ddf36131-87de-4565-8119-276078e346dd", "spaceName": "个人日常空间", "spaceType": "personal", "listId": "8d8d4122-7972-4713-a4a0-6924df0e27a4", "listTitle": "Social", "title": "「BOSS直聘简历」- 个人求职简历免费下载，使用打动hr的专业简历，抓住每个高薪机会", "customTitle": "", "displayName": "「BOSS直聘简历」- 个人求职简历免费下载，使用打动hr的专业简历，抓住每个高薪机会", "url": "https://cv.zhipin.com/my-resumes", "domain": "cv.zhipin.com", "favIconUrl": "https://z.zhipin.com/resume/favicon.ico", "description": "", "env": "saas", "isProd": false, "createdAt": "2025-11-27T04:10:21.395369Z"}, {"id": "e9b4dded-23db-4baa-b131-917d61ef3047", "spaceId": "e1ddd64b-70e5-4e97-a681-bc631518f5c3", "spaceName": "Entertainment", "spaceType": "private", "listId": "ae4f63bb-05e4-4feb-8c39-4eeec5bccc61", "listTitle": "Music", "title": "Apple music", "customTitle": "Apple music", "displayName": "Apple music", "url": "https://music.apple.com", "domain": "music.apple.com", "favIconUrl": "https://music.apple.com/assets/favicon/favicon-32.png", "description": "Apple music", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "e0d9cb3f-8e5a-4dcf-9551-69dec351483d", "spaceId": "e1ddd64b-70e5-4e97-a681-bc631518f5c3", "spaceName": "Entertainment", "spaceType": "private", "listId": "ae4f63bb-05e4-4feb-8c39-4eeec5bccc61", "listTitle": "Music", "title": "Spotify", "customTitle": "Spotify", "displayName": "Spotify", "url": "https://open.spotify.com", "domain": "open.spotify.com", "favIconUrl": "https://open.spotifycdn.com/cdn/images/favicon.0f31d2ea.ico", "description": "Spotify", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}, {"id": "ae1db976-c391-48cc-8dcf-572bfa8522d1", "spaceId": "e1ddd64b-70e5-4e97-a681-bc631518f5c3", "spaceName": "Entertainment", "spaceType": "private", "listId": "ae4f63bb-05e4-4feb-8c39-4eeec5bccc61", "listTitle": "Music", "title": "YouTube", "customTitle": "YouTube", "displayName": "YouTube", "url": "https://www.youtube.com", "domain": "youtube.com", "favIconUrl": "https://www.youtube.com/s/desktop/daa4e47c/img/favicon_32x32.png", "description": "YouTube", "env": "saas", "isProd": false, "createdAt": "2025-11-25T02:38:24.614244Z"}];
+
+    let currentCategory = 'all';
+    let currentSearch = '';
+    let currentEnvFilter = 'all';
+    let currentView = 'grid'; // 'grid' | 'table'
+
+    function getCategoryGroup(item) {
+      if (item.spaceName === '万物智汇') return '万物智汇';
+      if (item.listTitle === 'AI TOOL') return 'AI TOOL';
+      if (item.listTitle === '公司内网测试系统') return '公司内网测试系统';
+      if (item.listTitle === '外网系统地址') return '外网系统地址';
+      if (item.listTitle === 'Dec 01 at 21:31' || item.listTitle === 'My First Collection') return '常读与资产';
+      if (item.listTitle === 'Social') return '职场与社交';
+      if (item.spaceName === 'Entertainment' || item.spaceName === 'How to Use Toby') return '娱乐与指引';
+      return '其他收藏';
+    }
+
+    function render() {
+      const container = document.getElementById('bookmarksContainer');
+      const filtered = RAW_BOOKMARKS.filter(item => {
+        if (currentSearch) {
+          const q = currentSearch.toLowerCase();
+          const matchName = item.displayName.toLowerCase().includes(q);
+          const matchTitle = item.title.toLowerCase().includes(q);
+          const matchUrl = item.url.toLowerCase().includes(q);
+          const matchDesc = item.description.toLowerCase().includes(q);
+          const matchList = item.listTitle.toLowerCase().includes(q);
+          const matchSpace = item.spaceName.toLowerCase().includes(q);
+          if (!matchName && !matchTitle && !matchUrl && !matchDesc && !matchList && !matchSpace) {
+            return false;
+          }
+        }
+
+        if (currentCategory !== 'all') {
+          const cat = getCategoryGroup(item);
+          if (cat !== currentCategory) return false;
+        }
+
+        if (currentEnvFilter === 'lan' && item.env !== 'lan') return false;
+        if (currentEnvFilter === 'prod' && !item.isProd) return false;
+
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 4rem 1rem; color: var(--text-tertiary);">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+            <div style="font-size: 1.1rem; font-weight: 600;">未找到匹配的书签</div>
+            <div style="font-size: 0.85rem; margin-top: 0.4rem;">请尝试更换搜索词或重置分类筛选</div>
+          </div>
+        `;
+        return;
+      }
+
+      const spaces = new Map();
+      filtered.forEach(item => {
+        if (!spaces.has(item.spaceName)) {
+          spaces.set(item.spaceName, new Map());
+        }
+        const lists = spaces.get(item.spaceName);
+        if (!lists.has(item.listTitle)) {
+          lists.set(item.listTitle, []);
+        }
+        lists.get(item.listTitle).push(item);
+      });
+
+      let html = '';
+
+      if (currentView === 'grid') {
+        for (const [spaceName, lists] of spaces.entries()) {
+          const totalInSpace = Array.from(lists.values()).reduce((a, b) => a + b.length, 0);
+          html += `
+            <div class="space-group">
+              <div class="space-header">
+                <div class="space-title">
+                  <span>📁</span> ${spaceName}
+                  <span class="space-tag">${totalInSpace} 项</span>
+                </div>
+              </div>
+          `;
+
+          for (const [listTitle, items] of lists.entries()) {
+            html += `
+              <div class="list-section">
+                <div class="list-header">📂 ${listTitle} (${items.length})</div>
+                <div class="bookmarks-grid">
+            `;
+
+            for (const item of items) {
+              const initial = (item.displayName || 'W').charAt(0).toUpperCase();
+              
+              let envBadge = '';
+              if (item.isProd) {
+                envBadge = '<span class="env-tag env-prod">生产库</span>';
+              } else if (item.env === 'lan') {
+                envBadge = '<span class="env-tag env-lan">内网 192.168</span>';
+              } else if (item.env === 'ext-ip') {
+                envBadge = '<span class="env-tag env-ext">外部服务器</span>';
+              } else {
+                envBadge = '<span class="env-tag env-saas">SaaS/云端</span>';
+              }
+
+              const faviconHtml = item.favIconUrl 
+                ? `<img src="${item.favIconUrl}" onerror="this.parentElement.innerHTML='${initial}'" alt="favicon">`
+                : initial;
+
+              html += `
+                <div class="bookmark-card">
+                  <div>
+                    <div class="card-top">
+                      <div class="card-favicon">${faviconHtml}</div>
+                      <div class="card-main">
+                        <div class="card-title-row">
+                          <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="card-title" title="${item.displayName}">
+                            ${item.displayName}
+                          </a>
+                          ${envBadge}
+                        </div>
+                        ${item.description ? `<div class="card-desc">${item.description}</div>` : ''}
+                        <div class="card-url-mono">${item.url}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-footer">
+                    <span>${item.domain || '本地网络'}</span>
+                    <div class="card-actions">
+                      <button class="icon-action-btn copy-btn" data-url="${item.url}" title="复制链接">
+                        📋 复制
+                      </button>
+                      <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="icon-action-btn" title="新窗口打开">
+                        ↗ 直达
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }
+
+            html += `
+                </div>
+              </div>
+            `;
+          }
+
+          html += `</div>`;
+        }
+      } else {
+        html += `
+          <div class="bookmarks-table-wrap">
+            <table class="bookmarks-table">
+              <thead>
+                <tr>
+                  <th>名称 / 备注</th>
+                  <th>环境/类型</th>
+                  <th>所属空间 / 分组</th>
+                  <th>目标 URL</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        for (const item of filtered) {
+          let envBadge = '';
+          if (item.isProd) {
+            envBadge = '<span class="env-tag env-prod">生产库</span>';
+          } else if (item.env === 'lan') {
+            envBadge = '<span class="env-tag env-lan">内网 192.168</span>';
+          } else if (item.env === 'ext-ip') {
+            envBadge = '<span class="env-tag env-ext">外部服务器</span>';
+          } else {
+            envBadge = '<span class="env-tag env-saas">SaaS/云端</span>';
+          }
+
+          html += `
+            <tr>
+              <td class="title-col">
+                <a href="${item.url}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">
+                  ${item.displayName}
+                </a>
+              </td>
+              <td>${envBadge}</td>
+              <td>${item.spaceName} / ${item.listTitle}</td>
+              <td class="url-col" title="${item.url}">${item.url}</td>
+              <td>
+                <div style="display: flex; gap: 0.3rem;">
+                  <button class="icon-action-btn copy-btn" data-url="${item.url}">复制</button>
+                  <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="icon-action-btn">直达</a>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        html += `
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const url = btn.getAttribute('data-url');
+          navigator.clipboard.writeText(url).then(() => {
+            showToast('已复制：' + url);
+          });
+        });
+      });
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => {
+        t.classList.remove('show');
+      }, 2400);
+    }
+
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => {
+      currentSearch = e.target.value.trim();
+      render();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+
+    document.querySelectorAll('.pill-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.pill-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentCategory = tab.getAttribute('data-category');
+        render();
+      });
+    });
+
+    document.querySelectorAll('.stat-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.stat-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        const filter = card.getAttribute('data-filter');
+        if (filter === 'all') {
+          currentCategory = 'all';
+          currentEnvFilter = 'all';
+        } else if (filter === 'space-wanwu') {
+          currentCategory = '万物智汇';
+          currentEnvFilter = 'all';
+        } else if (filter === 'category-ai') {
+          currentCategory = 'AI TOOL';
+          currentEnvFilter = 'all';
+        } else if (filter === 'env-lan') {
+          currentCategory = 'all';
+          currentEnvFilter = 'lan';
+        } else if (filter === 'env-prod') {
+          currentCategory = 'all';
+          currentEnvFilter = 'prod';
+        }
+
+        document.querySelectorAll('.pill-tab').forEach(t => {
+          t.classList.toggle('active', t.getAttribute('data-category') === currentCategory);
+        });
+
+        render();
+      });
+    });
+
+    document.getElementById('viewGridBtn').addEventListener('click', () => {
+      currentView = 'grid';
+      document.getElementById('viewGridBtn').classList.add('active');
+      document.getElementById('viewTableBtn').classList.remove('active');
+      render();
+    });
+
+    document.getElementById('viewTableBtn').addEventListener('click', () => {
+      currentView = 'table';
+      document.getElementById('viewTableBtn').classList.add('active');
+      document.getElementById('viewGridBtn').classList.remove('active');
+      render();
+    });
+
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    themeBtn.addEventListener('click', () => {
+      const htmlEl = document.documentElement;
+      const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+      htmlEl.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      themeIcon.innerText = isDark ? '☀️' : '🌙';
+    });
+
+    document.getElementById('copyAllBtn').addEventListener('click', () => {
+      const allUrls = RAW_BOOKMARKS.map(b => `${b.displayName}: ${b.url}`).join('\n');
+      navigator.clipboard.writeText(allUrls).then(() => {
+        showToast(`已复制全部 ${RAW_BOOKMARKS.length} 个书签链接到剪贴板！`);
+      });
+    });
+
+    document.getElementById('exportHtmlBtn').addEventListener('click', () => {
+      let netscape = '<!DOCTYPE NETSCAPE-Bookmark-file-1>\n';
+      netscape += '<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">\n';
+      netscape += '<TITLE>Bookmarks</TITLE>\n';
+      netscape += '<H1>Bookmarks</H1>\n<DL><p>\n';
+
+      const spaces = new Map();
+      RAW_BOOKMARKS.forEach(b => {
+        if (!spaces.has(b.spaceName)) spaces.set(b.spaceName, new Map());
+        const lists = spaces.get(b.spaceName);
+        if (!lists.has(b.listTitle)) lists.set(b.listTitle, []);
+        lists.get(b.listTitle).push(b);
+      });
+
+      for (const [sName, lists] of spaces.entries()) {
+        netscape += `  <DT><H3>${sName}</H3>\n  <DL><p>\n`;
+        for (const [lTitle, items] of lists.entries()) {
+          netscape += `    <DT><H3>${lTitle}</H3>\n    <DL><p>\n`;
+          for (const item of items) {
+            netscape += `      <DT><A HREF="${item.url}">${item.displayName}</A>\n`;
+          }
+          netscape += `    </DL><p>\n`;
+        }
+        netscape += `  </DL><p>\n`;
+      }
+      netscape += '</DL><p>\n';
+
+      const blob = new Blob([netscape], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Yuanjie_Bookmarks_Toby_Export.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('已导出标准浏览器书签 HTML 文件！');
+    });
+
+    render();
+  </script>
+</body>
+</html>
