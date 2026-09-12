@@ -555,16 +555,17 @@
       align-items: center;
       gap: 6px;
       cursor: pointer;
-      padding: 3px 8px;
+      padding: 4px 9px;
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       transition: all 0.2s;
     }
 
     .loc-badge-btn:hover {
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.2);
       border-color: var(--liquid-border-highlight);
+      transform: translateY(-1px);
     }
 
     .weather-refresh-btn {
@@ -574,7 +575,9 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      transition: transform 0.3s;
+      padding: 4px;
+      border-radius: 6px;
+      transition: transform 0.3s, color 0.2s;
     }
 
     .weather-refresh-btn:hover {
@@ -1030,6 +1033,129 @@
       border-color: var(--liquid-border-highlight);
     }
 
+    /* City Switcher Modal */
+    .city-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(14px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .city-modal-backdrop.open {
+      display: flex;
+    }
+
+    .city-modal-card {
+      background: rgba(18, 25, 34, 0.95);
+      border: 1px solid var(--liquid-border-highlight);
+      border-radius: 24px;
+      padding: 24px 28px;
+      max-width: 440px;
+      width: 90%;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title-row h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 4px;
+    }
+
+    .modal-close-btn:hover {
+      color: #fff;
+    }
+
+    .quick-city-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .quick-city-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quick-city-btn:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .manual-city-input-wrap {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .manual-city-input-wrap input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .manual-city-input-wrap button {
+      background: var(--cyan);
+      color: #0c1219;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .gps-opt-in-btn {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 8px 12px;
+      color: var(--text-dim);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .gps-opt-in-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
     /* Toast */
     .app-toast {
       position: fixed;
@@ -1198,7 +1324,7 @@
           <span class="welcome-label">Welcome</span>
           <div class="welcome-name-row">
             Yuanjie
-            <span class="live-clock-pill" id="clockElement">11:42 AM</span>
+            <span class="live-clock-pill" id="clockElement">12:00 PM</span>
           </div>
         </div>
 
@@ -1250,7 +1376,7 @@
           <!-- Spline Curve & Real 6 Days Row -->
           <div class="timeline-container">
             <div class="timeline-days-flex" id="timelineDaysContainer">
-              <!-- Dynamically populated with real 6 days & temperatures -->
+              <!-- Dynamically populated from cache / live forecast -->
             </div>
 
             <!-- Glowing Smooth Dynamic Spline Curve -->
@@ -1263,7 +1389,7 @@
                 </linearGradient>
                 <linearGradient id="waveFill" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0%" stop-color="rgba(255,255,255,0.15)"/>
-                  <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+                  <stop offset="100%" stop-color="rgba(255,255,255,0.02)"/>
                 </linearGradient>
               </defs>
               <path id="dynamicSplineFill" d="M 0,36 Q 70,28 140,22 T 280,10 T 380,24 T 500,32 L 500,44 L 0,44 Z" fill="url(#waveFill)"></path>
@@ -1279,15 +1405,16 @@
           <!-- Primary Real Weather Card -->
           <div class="weather-main-widget" id="weatherWidgetBox">
             <div class="weather-location-row">
-              <div class="loc-badge-btn" id="locationBtn" title="点击切换城市或查看位置">
+              <div class="loc-badge-btn" id="locationBtn" title="点击切换城市（永久缓存在浏览器）">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
                   <circle cx="12" cy="10" r="3"></circle>
                 </svg>
-                <span id="weatherLocationName">上海 · 正在定位...</span>
+                <span id="weatherLocationName">上海 · Shanghai HQ</span>
+                <span style="font-size:0.65rem; opacity:0.6;">⚙️</span>
               </div>
               
-              <button class="weather-refresh-btn" id="refreshWeatherBtn" title="刷新最新天气数据">
+              <button class="weather-refresh-btn" id="refreshWeatherBtn" title="刷新最新气象">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
                 </svg>
@@ -1412,6 +1539,41 @@
       </div>
 
     </main>
+  </div>
+
+  <!-- City Selection Modal (Zero Popups, Cached in Browser) -->
+  <div class="city-modal-backdrop" id="cityModalBackdrop">
+    <div class="city-modal-card">
+      <div class="modal-title-row">
+        <h3>📍 选择您的常驻城市（已永久缓存）</h3>
+        <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+      </div>
+
+      <div style="font-size:0.8rem; color:var(--text-dim); margin-bottom:12px;">
+        配置将保存在浏览器本地（不会再次弹出权限请求），支持快速切换：
+      </div>
+
+      <div class="quick-city-grid">
+        <button class="quick-city-btn" onclick="selectQuickCity('上海')">上海 (HQ)</button>
+        <button class="quick-city-btn" onclick="selectQuickCity('北京')">北京</button>
+        <button class="quick-city-btn" onclick="selectQuickCity('深圳')">深圳</button>
+        <button class="quick-city-btn" onclick="selectQuickCity('杭州')">杭州</button>
+        <button class="quick-city-btn" onclick="selectQuickCity('苏州')">苏州</button>
+        <button class="quick-city-btn" onclick="selectQuickCity('广州')">广州</button>
+        <button class="quick-city-btn" onclick="selectQuickCity('南京')">南京</button>
+        <button class="quick-city-btn" onclick="selectQuickCity('武汉')">武汉</button>
+        <button class="quick-city-btn" onclick="selectQuickCity('成都')">成都</button>
+      </div>
+
+      <div class="manual-city-input-wrap">
+        <input type="text" id="manualCityInput" placeholder="输入其他城市 (如: 合肥、青岛、厦门)...">
+        <button onclick="handleManualCitySubmit()">确定</button>
+      </div>
+
+      <button class="gps-opt-in-btn" id="manualGpsOptInBtn">
+        🛰️ 手动使用当前设备 GPS 定位 (仅在此处点击时调用)
+      </button>
+    </div>
   </div>
 
   <!-- Toast Notification -->
@@ -1702,7 +1864,7 @@
     updateClock();
 
     // ==========================================================================
-    // Real-Time Live Weather & Dynamic Forecast Engine (Open-Meteo Integration)
+    // Real-Time Live Weather & Cache Engine (Zero Browser Permission Popups)
     // ==========================================================================
     const DEFAULT_CITY = {
       name: '上海 · Shanghai HQ',
@@ -1736,82 +1898,89 @@
 
     let cachedForecastDays = [];
 
-    async function fetchRealWeather(lat, lon, cityName) {
+    // Render weather data into DOM
+    function applyWeatherData(data, cityName) {
+      const current = data.current;
+      const curTemp = Math.round(current.temperature_2m);
+      const curHumidity = current.relative_humidity_2m;
+      const curWind = Math.round(current.wind_speed_10m);
+      const curCode = current.weather_code;
+      const meta = WMO_CODE_MAP[curCode] || { name: '多云', en: 'Partly Cloudy', icon: '⛅' };
+
+      // Right Widget
+      document.getElementById('currentTempText').textContent = curTemp;
+      document.getElementById('humidityText').textContent = `${curHumidity}%`;
+      document.getElementById('windSpeedText').textContent = `${curWind} km/h`;
+      document.getElementById('weatherConditionLabel').textContent = meta.name;
+      document.getElementById('weatherLocationName').textContent = cityName;
+
+      // Left Hero Stage
+      document.getElementById('weatherBigTitle').textContent = meta.en;
+      document.getElementById('weatherSubtitle').textContent = 
+        `当前气温 ${curTemp}°C · 湿度 ${curHumidity}% · 风速 ${curWind} km/h (${meta.name}) 于 ${cityName}。77 个工作区节点运行中。`;
+      document.getElementById('weatherTagText').textContent = `实时气象 · ${cityName} · 已校验`;
+
+      // 6-Day Daily Forecast
+      const daily = data.daily;
+      const daysContainer = document.getElementById('timelineDaysContainer');
+      const weekdayNames = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+      
+      let daysHtml = '';
+      cachedForecastDays = [];
+      const numDays = Math.min(6, daily.time.length);
+      const maxTemps = [];
+
+      for (let i = 0; i < numDays; i++) {
+        const dateStr = daily.time[i];
+        const dateObj = new Date(dateStr);
+        const dayName = i === 0 ? '今天' : weekdayNames[dateObj.getDay()];
+        const maxT = Math.round(daily.temperature_2m_max[i]);
+        const minT = Math.round(daily.temperature_2m_min[i]);
+        const wCode = daily.weather_code[i];
+        const dayMeta = WMO_CODE_MAP[wCode] || { icon: '⛅' };
+
+        maxTemps.push(maxT);
+        cachedForecastDays.push({
+          index: i,
+          dayName: dayName,
+          maxT: maxT,
+          minT: minT,
+          icon: dayMeta.icon,
+          date: dateStr
+        });
+
+        daysHtml += `
+          <div class="day-item ${i === 0 ? 'active' : ''}" onclick="highlightDay(${i})">
+            <span class="day-temp-text">${maxT}° <small style="font-size:0.8rem;">${dayMeta.icon}</small></span>
+            <span class="day-label-text">${dayName}</span>
+          </div>
+        `;
+      }
+
+      daysContainer.innerHTML = daysHtml;
+      drawSplineCurve(maxTemps);
+    }
+
+    async function fetchRealWeather(lat, lon, cityName, saveCache = true) {
       try {
-        document.getElementById('weatherTagText').textContent = '气象节点实时通讯中...';
-        
         const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`;
         const res = await fetch(url);
         if (!res.ok) throw new Error('Weather API fetch failed');
         const data = await res.json();
 
-        // 1. Parse Current Weather
-        const current = data.current;
-        const curTemp = Math.round(current.temperature_2m);
-        const curHumidity = current.relative_humidity_2m;
-        const curWind = Math.round(current.wind_speed_10m);
-        const curCode = current.weather_code;
-        const meta = WMO_CODE_MAP[curCode] || { name: '多云', en: 'Partly Cloudy', icon: '⛅' };
+        applyWeatherData(data, cityName);
 
-        // 2. Update Right Widget (Real Data)
-        document.getElementById('currentTempText').textContent = curTemp;
-        document.getElementById('humidityText').textContent = `${curHumidity}%`;
-        document.getElementById('windSpeedText').textContent = `${curWind} km/h`;
-        document.getElementById('weatherConditionLabel').textContent = meta.name;
-        document.getElementById('weatherLocationName').textContent = cityName;
-
-        // 3. Update Left Hero Stage Title & Subtitle (Real Data)
-        document.getElementById('weatherBigTitle').textContent = meta.en;
-        document.getElementById('weatherSubtitle').textContent = 
-          `当前气温 ${curTemp}°C · 湿度 ${curHumidity}% · 风速 ${curWind} km/h (${meta.name}) 于 ${cityName}。77 个工作区节点运行中。`;
-        document.getElementById('weatherTagText').textContent = `实时气象 · ${cityName} · 已校验`;
-
-        // 4. Update 6-Day Daily Forecast & Days Row
-        const daily = data.daily;
-        const daysContainer = document.getElementById('timelineDaysContainer');
-        const weekdayNames = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-        
-        let daysHtml = '';
-        cachedForecastDays = [];
-        const numDays = Math.min(6, daily.time.length);
-        const maxTemps = [];
-
-        for (let i = 0; i < numDays; i++) {
-          const dateStr = daily.time[i];
-          const dateObj = new Date(dateStr);
-          const dayName = i === 0 ? '今天' : weekdayNames[dateObj.getDay()];
-          const maxT = Math.round(daily.temperature_2m_max[i]);
-          const minT = Math.round(daily.temperature_2m_min[i]);
-          const wCode = daily.weather_code[i];
-          const dayMeta = WMO_CODE_MAP[wCode] || { icon: '⛅' };
-
-          maxTemps.push(maxT);
-          cachedForecastDays.push({
-            index: i,
-            dayName: dayName,
-            maxT: maxT,
-            minT: minT,
-            icon: dayMeta.icon,
-            date: dateStr
-          });
-
-          daysHtml += `
-            <div class="day-item ${i === 0 ? 'active' : ''}" onclick="highlightDay(${i})">
-              <span class="day-temp-text">${maxT}° <small style="font-size:0.8rem;">${dayMeta.icon}</small></span>
-              <span class="day-label-text">${dayName}</span>
-            </div>
-          `;
+        // Cache in localStorage to load instantly on next refresh
+        if (saveCache) {
+          localStorage.setItem('user_hub_weather_cache', JSON.stringify({
+            timestamp: Date.now(),
+            cityName: cityName,
+            data: data
+          }));
         }
-
-        daysContainer.innerHTML = daysHtml;
-
-        // 5. Draw dynamic smooth spline SVG curve based on real temperatures
-        drawSplineCurve(maxTemps);
-
       } catch (err) {
-        console.warn('Real weather fetch error, using local fallback:', err);
-        document.getElementById('weatherTagText').textContent = '气象数据离线缓存模式';
-        document.getElementById('weatherLocationName').textContent = cityName;
+        console.warn('Weather fetch error:', err);
+        document.getElementById('weatherTagText').textContent = '气象离线缓存模式';
       }
     }
 
@@ -1825,15 +1994,12 @@
       const maxT = Math.max(...temps);
       const range = (maxT - minT) || 1;
 
-      // Compute (x, y) coordinates for each temperature point
       const points = temps.map((t, idx) => {
         const x = (idx / (temps.length - 1)) * width;
-        // Invert Y: higher temperature is closer to top (smaller y)
         const y = height - padY - ((t - minT) / range) * (height - padY * 2);
         return { x, y };
       });
 
-      // Build smooth cubic bezier path
       let d = `M ${points[0].x},${points[0].y}`;
       for (let i = 0; i < points.length - 1; i++) {
         const p0 = points[i];
@@ -1842,7 +2008,6 @@
         d += ` C ${cx},${p0.y} ${cx},${p1.y} ${p1.x},${p1.y}`;
       }
 
-      // Line and Fill
       const lineEl = document.getElementById('dynamicSplineLine');
       const fillEl = document.getElementById('dynamicSplineFill');
       const pinEl = document.getElementById('dynamicSplinePin');
@@ -1872,19 +2037,7 @@
       }
     }
 
-    // Location Switcher Modal or Quick Switch
-    document.getElementById('locationBtn').addEventListener('click', () => {
-      const customCity = prompt('请输入您所在的城市（如：上海、北京、深圳、广州、杭州、苏州、武汉、成都等）：', '上海');
-      if (customCity && customCity.trim()) {
-        resolveCityAndFetch(customCity.trim());
-      }
-    });
-
-    document.getElementById('refreshWeatherBtn').addEventListener('click', () => {
-      initLocationAndWeather(true);
-      triggerToast('正在刷新气象数据...');
-    });
-
+    // City Coordinates Dictionary
     const CITY_COORDS = {
       '上海': { name: '上海 · Shanghai HQ', lat: 31.2304, lon: 121.4737 },
       '北京': { name: '北京 · Capital Base', lat: 39.9042, lon: 116.4074 },
@@ -1897,19 +2050,46 @@
       '成都': { name: '成都 · West Center', lat: 30.5728, lon: 104.0668 }
     };
 
-    async function resolveCityAndFetch(cityName) {
-      for (const [key, val] of Object.entries(CITY_COORDS)) {
-        if (cityName.includes(key)) {
-          localStorage.setItem('user_hub_saved_city', JSON.stringify(val));
-          fetchRealWeather(val.lat, val.lon, val.name);
-          triggerToast(`已切换至 ${val.name} 气象节点`);
+    // Modal Control
+    const modalBackdrop = document.getElementById('cityModalBackdrop');
+    document.getElementById('locationBtn').addEventListener('click', () => {
+      modalBackdrop.classList.add('open');
+    });
+
+    document.getElementById('modalCloseBtn').addEventListener('click', () => {
+      modalBackdrop.classList.remove('open');
+    });
+
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) modalBackdrop.classList.remove('open');
+    });
+
+    function selectQuickCity(cityName) {
+      const config = CITY_COORDS[cityName];
+      if (config) {
+        localStorage.setItem('user_hub_saved_city', JSON.stringify(config));
+        fetchRealWeather(config.lat, config.lon, config.name);
+        modalBackdrop.classList.remove('open');
+        triggerToast(`已设置常驻城市为 ${config.name} (已永久保存在本地)`);
+      }
+    }
+
+    async function handleManualCitySubmit() {
+      const input = document.getElementById('manualCityInput');
+      const val = input.value.trim();
+      if (!val) return;
+
+      for (const [k, cfg] of Object.entries(CITY_COORDS)) {
+        if (val.includes(k)) {
+          selectQuickCity(k);
+          input.value = '';
           return;
         }
       }
 
-      // Fallback: Geocode via Open-Meteo
       try {
-        const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=zh&format=json`);
+        triggerToast(`正在联网解析 "${val}" 经纬度...`);
+        const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(val)}&count=1&language=zh&format=json`);
         const data = await res.json();
         if (data.results && data.results.length > 0) {
           const item = data.results[0];
@@ -1917,52 +2097,94 @@
           const config = { name: fullLabel, lat: item.latitude, lon: item.longitude };
           localStorage.setItem('user_hub_saved_city', JSON.stringify(config));
           fetchRealWeather(config.lat, config.lon, config.name);
-          triggerToast(`已定位至 ${fullLabel}`);
+          modalBackdrop.classList.remove('open');
+          input.value = '';
+          triggerToast(`已定位并缓存至 ${fullLabel}`);
         } else {
-          triggerToast('未能解析该城市，保持当前位置');
+          triggerToast('未能找到该城市，请检查名称后重试');
         }
-      } catch (e) {
-        triggerToast('城市网络解析失败');
+      } catch (err) {
+        triggerToast('网络检索失败，请稍后重试');
       }
     }
 
-    function initLocationAndWeather(forceRefresh = false) {
-      // 1. Check saved city in localStorage
+    // Manual GPS Opt-in (Only runs when clicked by user, NEVER auto-runs on page load)
+    document.getElementById('manualGpsOptInBtn').addEventListener('click', () => {
+      if (!navigator.geolocation) {
+        triggerToast('当前浏览器不支持 GPS 定位');
+        return;
+      }
+      triggerToast('正在请求设备 GPS 定位权限...');
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          let cityLabel = '当前真实定位';
+          try {
+            const r = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=zh`);
+            const d = await r.json();
+            if (d && d.address) {
+              const city = d.address.city || d.address.state || d.address.town || '本地位置';
+              const dist = d.address.suburb || d.address.quarter || '';
+              cityLabel = dist ? `${city} · ${dist}` : city;
+            }
+          } catch(e) {}
+          
+          const config = { name: cityLabel, lat: lat, lon: lon };
+          localStorage.setItem('user_hub_saved_city', JSON.stringify(config));
+          fetchRealWeather(lat, lon, cityLabel);
+          modalBackdrop.classList.remove('open');
+          triggerToast(`GPS 定位成功：${cityLabel} (已保存到本地缓存)`);
+        },
+        (err) => {
+          triggerToast('定位权限被拒绝或超时，已保留原有城市');
+        },
+        { timeout: 5000 }
+      );
+    });
+
+    document.getElementById('refreshWeatherBtn').addEventListener('click', () => {
+      const city = getStoredCity();
+      fetchRealWeather(city.lat, city.lon, city.name);
+      triggerToast('已手动刷新气象数据！');
+    });
+
+    function getStoredCity() {
       const saved = localStorage.getItem('user_hub_saved_city');
-      if (saved && !forceRefresh) {
+      if (saved) {
         try {
-          const parsed = JSON.parse(saved);
-          fetchRealWeather(parsed.lat, parsed.lon, parsed.name);
-          return;
+          return JSON.parse(saved);
+        } catch(e) {}
+      }
+      // Default to Shanghai and save immediately
+      localStorage.setItem('user_hub_saved_city', JSON.stringify(DEFAULT_CITY));
+      return DEFAULT_CITY;
+    }
+
+    // Zero-Popup Initialization Engine:
+    // 1. Read localStorage city immediately
+    // 2. Read cached weather if under 30 minutes old (0ms load)
+    // 3. Silently fetch background update without any navigator.geolocation prompt
+    function initWeatherEngine() {
+      const city = getStoredCity();
+      
+      // Check weather cache
+      const cached = localStorage.getItem('user_hub_weather_cache');
+      let cacheValid = false;
+      if (cached) {
+        try {
+          const c = JSON.parse(cached);
+          // If cache is for same city and less than 30 minutes old
+          if (c.cityName === city.name && (Date.now() - c.timestamp) < 30 * 60 * 1000) {
+            applyWeatherData(c.data, c.cityName);
+            cacheValid = true;
+          }
         } catch(e) {}
       }
 
-      // 2. Try HTML5 Geolocation API
-      if (navigator.geolocation && !saved) {
-        navigator.geolocation.getCurrentPosition(
-          async (pos) => {
-            const lat = pos.coords.latitude;
-            const lon = pos.coords.longitude;
-            let cityLabel = '当前真实定位';
-            try {
-              const r = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=zh`);
-              const d = await r.json();
-              if (d && d.address) {
-                const city = d.address.city || d.address.state || d.address.town || '本地位置';
-                const dist = d.address.suburb || d.address.quarter || '';
-                cityLabel = dist ? `${city} · ${dist}` : city;
-              }
-            } catch(e) {}
-            fetchRealWeather(lat, lon, cityLabel);
-          },
-          (err) => {
-            // Geolocation fallback
-            fetchRealWeather(DEFAULT_CITY.lat, DEFAULT_CITY.lon, DEFAULT_CITY.name);
-          },
-          { timeout: 4000 }
-        );
-      } else {
-        fetchRealWeather(DEFAULT_CITY.lat, DEFAULT_CITY.lon, DEFAULT_CITY.name);
+      // If no valid cache, fetch immediately in background
+      if (!cacheValid) {
+        fetchRealWeather(city.lat, city.lon, city.name);
       }
     }
 
@@ -1976,7 +2198,7 @@
 
     // Initial render
     renderCards();
-    initLocationAndWeather();
+    initWeatherEngine();
   </script>
 </body>
 </html>
