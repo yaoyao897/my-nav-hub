@@ -148,11 +148,71 @@
     .dock-nav-group {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
       align-items: center;
       width: 100%;
       position: relative;
       z-index: 2;
+    }
+
+    /* Apple Liquid Glass Slider Pill (物理平滑滑动的流体玻璃胶囊) */
+    .dock-liquid-slider {
+      position: absolute;
+      left: 12px;
+      width: 50px;
+      height: 42px;
+      border-radius: 15px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      
+      /* Apple visionOS / iOS 18 Liquid Glass Material */
+      background: linear-gradient(145deg, 
+        rgba(255, 255, 255, 0.35) 0%, 
+        rgba(255, 255, 255, 0.08) 45%, 
+        rgba(255, 255, 255, 0.22) 100%
+      );
+      backdrop-filter: blur(28px) saturate(220%) contrast(110%);
+      -webkit-backdrop-filter: blur(28px) saturate(220%) contrast(110%);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      
+      /* Apple Specular Edge & Ambient Shadow */
+      box-shadow: 
+        inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.35),
+        0 10px 24px -4px rgba(0, 0, 0, 0.55),
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(56, 189, 248, 0.35);
+      
+      /* Apple Fluid Spring Motion */
+      transition: transform 0.45s cubic-bezier(0.34, 1.45, 0.52, 1),
+                  opacity 0.2s ease,
+                  height 0.25s ease;
+      will-change: transform;
+    }
+
+    /* Left Glowing Indicator Notch that slides along with the capsule */
+    .dock-liquid-slider::before {
+      content: '';
+      position: absolute;
+      left: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 22px;
+      background: #ffffff;
+      border-radius: 0 4px 4px 0;
+      box-shadow: 0 0 14px rgba(255, 255, 255, 1), 0 0 6px #38bdf8;
+    }
+
+    /* Liquid Caustic Radial Sheen */
+    .dock-liquid-slider::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 15px;
+      background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.55) 0%, transparent 65%);
+      pointer-events: none;
     }
 
     .liquid-dock-btn {
@@ -167,6 +227,7 @@
       color: var(--text-dim);
       cursor: pointer;
       position: relative;
+      z-index: 2;
       transition: color 0.22s ease;
     }
 
@@ -175,40 +236,33 @@
     }
 
     .dock-icon-box {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  color 0.2s ease,
+                  filter 0.25s ease;
+      will-change: transform;
     }
 
-    .liquid-dock-btn:hover .dock-icon-box {
-      background: rgba(255, 255, 255, 0.12);
-      transform: scale(1.08);
+    /* Tactile Press Feel */
+    .liquid-dock-btn:active .dock-icon-box {
+      transform: scale(0.86) !important;
+      transition: transform 0.1s ease !important;
     }
 
+    /* Active Glowing State */
     .liquid-dock-btn.active {
       color: #ffffff;
     }
 
     .liquid-dock-btn.active .dock-icon-box {
-      background: rgba(255, 255, 255, 0.18);
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35);
-    }
-
-    .liquid-dock-btn.active::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 4px;
-      height: 22px;
-      background: #ffffff;
-      border-radius: 0 4px 4px 0;
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+      color: #ffffff;
+      transform: scale(1.08);
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 4px #38bdf8);
     }
 
     .dock-tooltip {
@@ -1214,7 +1268,10 @@
       </div>
 
       <!-- Center Category Navigation Buttons -->
-      <div class="dock-nav-group">
+      <div class="dock-nav-group" id="dockNavGroup">
+        <!-- Apple Liquid Glass Sliding Capsule -->
+        <div class="dock-liquid-slider" id="dockLiquidSlider"></div>
+
         <button class="liquid-dock-btn active" data-filter-cat="all">
           <div class="dock-icon-box">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1782,10 +1839,20 @@
         else btn.classList.remove('active');
       });
 
+      // Update dock buttons & glide liquid slider
+      let activeDockBtn = null;
       document.querySelectorAll('.liquid-dock-btn').forEach(btn => {
-        if (btn.dataset.filterCat === cat) btn.classList.add('active');
-        else btn.classList.remove('active');
+        if (btn.dataset.filterCat === cat) {
+          btn.classList.add('active');
+          activeDockBtn = btn;
+        } else {
+          btn.classList.remove('active');
+        }
       });
+
+      if (activeDockBtn) {
+        moveDockSlider(activeDockBtn);
+      }
 
       renderCards();
       
@@ -2211,9 +2278,92 @@
       triggerToast(ambientDark ? '已恢复标准雷暴氛围' : '已增强高对比通透模式');
     });
 
+    // ==========================================================================
+    // Apple Liquid Glass Dock Slider & Fish-eye Magnification Physics
+    // ==========================================================================
+    const dockSlider = document.getElementById('dockLiquidSlider');
+    const dockNavGroup = document.getElementById('dockNavGroup');
+
+    function moveDockSlider(targetBtn) {
+      if (!dockSlider || !targetBtn || !dockNavGroup) return;
+      const targetTop = targetBtn.offsetTop;
+      const targetHeight = targetBtn.offsetHeight || 42;
+
+      dockSlider.style.height = `${targetHeight}px`;
+
+      const prevTop = parseFloat(dockSlider.dataset.currentTop || targetTop);
+      const deltaY = targetTop - prevTop;
+      dockSlider.dataset.currentTop = targetTop;
+
+      // Dynamic Jelly / Droplet Stretch during translation
+      if (Math.abs(deltaY) > 6) {
+        const stretchY = 1 + Math.min(0.2, Math.abs(deltaY) / 280);
+        const squishX = 1 / Math.sqrt(stretchY);
+        dockSlider.style.transform = `translateY(${targetTop}px) scaleY(${stretchY.toFixed(3)}) scaleX(${squishX.toFixed(3)})`;
+        setTimeout(() => {
+          dockSlider.style.transform = `translateY(${targetTop}px) scale(1)`;
+        }, 180);
+      } else {
+        dockSlider.style.transform = `translateY(${targetTop}px) scale(1)`;
+      }
+
+      dockSlider.style.opacity = '1';
+    }
+
+    // Align slider on initial load & resize
+    function syncInitialDockSlider() {
+      const activeBtn = document.querySelector('.liquid-dock-btn.active') || document.querySelector('.liquid-dock-btn');
+      if (activeBtn && dockSlider) {
+        dockSlider.style.transition = 'none';
+        moveDockSlider(activeBtn);
+        setTimeout(() => {
+          dockSlider.style.transition = 'transform 0.45s cubic-bezier(0.34, 1.45, 0.52, 1), opacity 0.2s ease, height 0.25s ease';
+        }, 60);
+      }
+    }
+
+    // macOS / React Bits Proximity Fish-Eye Wave Hover Effect
+    if (dockNavGroup) {
+      const dockBtns = dockNavGroup.querySelectorAll('.liquid-dock-btn');
+
+      dockNavGroup.addEventListener('mousemove', (e) => {
+        const mouseY = e.clientY;
+
+        dockBtns.forEach(btn => {
+          const rect = btn.getBoundingClientRect();
+          const centerY = rect.top + rect.height / 2;
+          const dist = Math.abs(mouseY - centerY);
+          const icon = btn.querySelector('.dock-icon-box');
+
+          if (!icon || btn.matches(':active')) return;
+
+          // Proximity curve across 70px threshold
+          if (dist < 70) {
+            const proximity = 1 - (dist / 70);
+            const scale = 1 + 0.18 * Math.cos(proximity * Math.PI * 0.5);
+            icon.style.transform = `scale(${(scale).toFixed(3)})`;
+          } else {
+            icon.style.transform = btn.classList.contains('active') ? 'scale(1.08)' : 'scale(1)';
+          }
+        });
+      });
+
+      dockNavGroup.addEventListener('mouseleave', () => {
+        dockBtns.forEach(btn => {
+          const icon = btn.querySelector('.dock-icon-box');
+          if (icon) {
+            icon.style.transform = btn.classList.contains('active') ? 'scale(1.08)' : 'scale(1)';
+          }
+        });
+      });
+    }
+
+    window.addEventListener('resize', syncInitialDockSlider);
+
     // Initial render
     renderCards();
     initWeatherEngine();
+    syncInitialDockSlider();
   </script>
 </body>
 </html>
